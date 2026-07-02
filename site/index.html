@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Studio Bea Sophia — Websites that get small businesses chosen</title>
+<meta name="description" content="Studio Bea Sophia designs modern, content-forward websites for independent and creative businesses. We don't sell design — we sell being chosen: more revenue, more credibility, more visibility." />
+<meta property="og:title" content="Studio Bea Sophia — Websites that get small businesses chosen" />
+<meta property="og:description" content="Modern, content-forward websites for independent and creative businesses. Built for revenue, credibility, and visibility — not just looks." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#1a1a18;
+    --ink-soft:#4a4a45;
+    --paper:#f7f4ee;
+    --paper-2:#efeae0;
+    --accent:#b8543a;
+    --accent-soft:#d98a6f;
+    --line:#e0d9cc;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.1;letter-spacing:-0.01em}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  a{color:inherit}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(247,244,238,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600;letter-spacing:-.02em}
+  .logo span{color:var(--accent)}
+  .nav-cta{font-size:.9rem;font-weight:600;text-decoration:none;background:var(--ink);color:var(--paper);padding:10px 20px;border-radius:100px;transition:background .2s}
+  .nav-cta:hover{background:var(--accent)}
+
+  /* HERO */
+  header{padding:96px 0 72px}
+  .eyebrow{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}
+  header h1{font-size:clamp(2.6rem,6vw,4.4rem);max-width:14ch;margin-bottom:24px}
+  header h1 em{font-style:italic;color:var(--accent)}
+  .lede{font-size:clamp(1.1rem,2.2vw,1.35rem);color:var(--ink-soft);max-width:46ch;margin-bottom:36px}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:1rem;padding:15px 30px;border-radius:100px;transition:transform .15s,background .2s}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{transform:translateY(-2px);background:#a3472f}
+  .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+  /* PILLARS */
+  .pillars{background:var(--paper-2);padding:80px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .section-head{text-align:center;margin-bottom:56px}
+  .section-head h2{font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:14px}
+  .section-head p{color:var(--ink-soft);max-width:50ch;margin:0 auto;font-size:1.05rem}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .pillar{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:28px}
+  .pillar .num{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--accent-soft);margin-bottom:10px}
+  .pillar h3{font-size:1.25rem;margin-bottom:8px}
+  .pillar p{font-size:.95rem;color:var(--ink-soft)}
+
+  /* PHILOSOPHY */
+  .philo{padding:88px 0}
+  .philo-quote{font-family:'Fraunces',serif;font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.25;max-width:20ch;margin-bottom:28px}
+  .philo-quote em{font-style:italic;color:var(--accent)}
+  .philo-body{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .philo-body p{color:var(--ink-soft);font-size:1.05rem;margin-bottom:18px}
+
+  /* WHO */
+  .who{background:var(--ink);color:var(--paper);padding:84px 0}
+  .who h2{color:var(--paper);font-size:clamp(1.9rem,4vw,2.6rem);margin-bottom:14px}
+  .who .section-head p{color:#b9b3a7}
+  .who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+  .who-card{border:1px solid #36352f;border-radius:14px;padding:26px;background:#211f1b}
+  .who-card h3{color:var(--accent-soft);font-size:1.15rem;margin-bottom:8px}
+  .who-card p{color:#c7c1b5;font-size:.95rem}
+
+  /* PROCESS */
+  .process{padding:88px 0}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:48px}
+  .step{position:relative;padding-top:20px;border-top:2px solid var(--accent)}
+  .step .s-num{font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .step h3{font-size:1.3rem;margin-bottom:8px}
+  .step p{color:var(--ink-soft);font-size:.98rem}
+
+  /* CTA */
+  .cta{background:var(--accent);color:#fff;padding:88px 0;text-align:center}
+  .cta h2{color:#fff;font-size:clamp(2rem,4.5vw,3rem);margin-bottom:18px;max-width:18ch;margin-left:auto;margin-right:auto}
+  .cta p{color:#ffe5db;font-size:1.15rem;max-width:42ch;margin:0 auto 34px}
+  .cta .btn-primary{background:#fff;color:var(--accent)}
+  .cta .btn-primary:hover{background:var(--ink);color:#fff}
+
+  /* FOOTER */
+  footer{padding:48px 0;text-align:center;color:var(--ink-soft);font-size:.9rem}
+  footer .logo{font-size:1.05rem;margin-bottom:10px;display:inline-block}
+  footer a{color:var(--accent);text-decoration:none;font-weight:600}
+
+  @media(max-width:880px){
+    .grid4{grid-template-columns:repeat(2,1fr)}
+    .philo-body,.who-grid,.steps{grid-template-columns:1fr}
+    .who-grid,.steps{gap:18px}
+    header{padding:64px 0 48px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Studio <span>Bea Sophia</span></div>
+    <a class="nav-cta" href="#contact">Start a project</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="eyebrow">Web design for independent businesses</span>
+    <h1>Websites that get you <em>chosen</em>.</h1>
+    <p class="lede">I design modern, content-forward sites for creative and independent businesses — built to win the customer, not just win awards.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="#contact">Get a free homepage mockup</a>
+      <a class="btn btn-ghost" href="#philosophy">How I work</a>
+    </div>
+  </div>
+</header>
+
+<section class="pillars">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>A website should earn its keep</h2>
+      <p>Every site I build is judged against four questions — not whether it looks nice, but whether it does its job.</p>
+    </div>
+    <div class="grid4">
+      <div class="pillar">
+        <div class="num">01</div>
+        <h3>Revenue</h3>
+        <p>Does it turn visitors into bookings, orders and enquiries — instead of letting them drift to a competitor?</p>
+      </div>
+      <div class="pillar">
+        <div class="num">02</div>
+        <h3>Credibility</h3>
+        <p>Does it make a first-time visitor trust you in five seconds? Your own domain, your real work, front and centre.</p>
+      </div>
+      <div class="pillar">
+        <div class="num">03</div>
+        <h3>Visibility</h3>
+        <p>Can people actually find you — fast, mobile-first, searchable — when they go looking on their phone?</p>
+      </div>
+      <div class="pillar">
+        <div class="num">04</div>
+        <h3>Urgency</h3>
+        <p>Does it load quickly and clearly, so the moment of interest doesn't slip away to a faster, clearer rival?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="philo" id="philosophy">
+  <div class="wrap">
+    <div class="philo-quote">I don't sell design. I sell <em>being chosen.</em></div>
+    <div class="philo-body">
+      <div>
+        <p>Most small businesses have real character offline — the craft, the story, the regulars who love them. Then their website undersells all of it: a stale template, a booking link buried three clicks deep, a layout that breaks on a phone.</p>
+        <p>That gap costs real customers. Someone searches, lands, hesitates, and quietly picks the competitor whose site felt easier to trust.</p>
+      </div>
+      <div>
+        <p>My job is to close that gap. I build clean, fast, content-forward sites that put your best work first and make the next step obvious — book, order, enquire, visit.</p>
+        <p>No jargon, no bloated builds, no design for design's sake. Just a site that pulls its weight and quietly brings you more of the right customers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Who I work with</h2>
+      <p>Independent, creative and mission-driven businesses with strong character offline and a weak presence online.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card">
+        <h3>Makers &amp; craft</h3>
+        <p>Upholsterers, framers, saddlers, ceramicists — work that deserves a proper gallery, not a single dated page.</p>
+      </div>
+      <div class="who-card">
+        <h3>Florists &amp; growers</h3>
+        <p>Studios and flower farms whose visual, seasonal work gets lost in words and generic templates.</p>
+      </div>
+      <div class="who-card">
+        <h3>Studios &amp; practitioners</h3>
+        <p>Salons, pilates studios, trainers and therapists who need calm, trustworthy sites with easy booking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Simple, low-risk, start with a mockup</h2>
+      <p>You see the value before you commit to anything.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="s-num">Step 01</div>
+        <h3>Free homepage mockup</h3>
+        <p>I design a fresh version of your homepage — no cost, no obligation. You see exactly what's possible.</p>
+      </div>
+      <div class="step">
+        <div class="s-num">Step 02</div>
+        <h3>Build &amp; refine</h3>
+        <p>If you love it, I build the full site — fast, mobile-first, easy to update — and we refine together.</p>
+      </div>
+      <div class="step">
+        <div class="s-num">Step 03</div>
+        <h3>Live &amp; bringing you work</h3>
+        <p>Your site goes live on your own domain, doing its job: turning visitors into customers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <h2>Let's get your work the home it deserves</h2>
+    <p>Tell me about your business and I'll send back a free homepage mockup — no strings.</p>
+    <a class="btn btn-primary" href="mailto:studiobeasophia@gmail.com?subject=I'd%20like%20a%20free%20homepage%20mockup">Email Studio Bea Sophia</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">Studio <span style="color:var(--accent)">Bea Sophia</span></div>
+    <p>Modern websites for independent businesses · <a href="mailto:studiobeasophia@gmail.com">studiobeasophia@gmail.com</a></p>
+    <p style="margin-top:8px;opacity:.7">© 2026 Studio Bea Sophia</p>
+  </div>
+</footer>
+
+</body>
+</html>
