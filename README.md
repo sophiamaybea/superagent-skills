@@ -1,23 +1,32 @@
-# Superagent Skills
+# Studio Bea Sophia — Superagent Skills & Strategy
 
-Skills, prompts, and automations for Studio Bea Sophia's AI agent.
+Version-controlled home for the Studio Bea Sophia growth engine: outreach
+playbooks, site/experience briefs, content tooling, and agent skills.
 
 ## Structure
 
 ```
-/skills          → Reusable agent skills (lead gen, outreach, research etc.)
-/prompts         → Saved prompt templates
-/automations     → Automation configs and schedules
-/docs            → Notes and strategy docs
+docs/       Strategy & playbooks
+  cold-email-playbook.md   The drafting behaviour for ALL CRM outreach
+  lead-gen-prompt.md       Lead-generation & prioritisation brief
+
+prompts/    Reusable build prompts
+  master-site-brief.md            Landing + constellation + dashboard (one site)
+  awwwards-experience-brief.md    Node-map → dashboard → customer-view
+
+site/       Live site source
+  index.html      Studio homepage
+  showcase.html   Interactive industry-picker showcase
+
+skills/     Agent tooling
+  carousel/       HTML-to-PNG Instagram carousel generator
+  repo-status.sh
+
+automations/  (reserved)
 ```
 
-## What's here
-
-This repo stores the building blocks that power Bea's Superagent — her personal AI assistant for Studio Bea Sophia.
-
-Skills are modular routines the agent can run on demand or on a schedule. Think of them as saved recipes: lead generation, cold email drafting, CRM updates, morning briefings, and more.
-
----
-
-*Studio Bea Sophia — bespoke illustrated websites for independent businesses.*
-
+## Core principles
+- Never sell design, sell utility (Revenue / Credibility / Visibility / Urgency).
+- Cold email: 50–75 words, one CTA, OPSA structure, value-first ask.
+- Productized builds (Seasonal Drop, Job Tracker, Auto-Waitlist) over generic sites.
+- Content is rendered from HTML for pixel-perfect text, not AI image tools.
