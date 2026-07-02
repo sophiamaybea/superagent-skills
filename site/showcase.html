@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Studio Bea Sophia — What I could build for your business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf6f0; --ink:#2b2420; --muted:#7a6f66;
+    --terra:#c8613f; --terra-soft:#e8c9ba; --terra-tint:#f4e6df;
+    --line:#e8ded4; --card:#fffdfb;
+    --red:#b8452f; --red-tint:#f7e4de; --green:#4f7a52; --green-tint:#e4efe1;
+    --wa:#25d366;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;line-height:1.15}
+  .demo-banner{background:var(--terra-tint);color:var(--ink);text-align:center;font-size:13px;padding:9px 16px;border-bottom:1px solid var(--line)}
+  .demo-banner b{color:var(--terra)}
+  header{text-align:center;padding:52px 0 30px}
+  header .kicker{text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--terra);font-weight:600;margin-bottom:14px}
+  header h1{font-size:38px;margin-bottom:14px}
+  header p{color:var(--muted);font-size:17px;max-width:560px;margin:0 auto}
+  .picker{padding:14px 0 40px}
+  .picker h2{text-align:center;font-size:22px;margin-bottom:22px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:640px){.grid{grid-template-columns:repeat(2,1fr)}header h1{font-size:30px}}
+  .ind{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:.18s;user-select:none}
+  .ind:hover{border-color:var(--terra);transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,97,63,.10)}
+  .ind.active{border-color:var(--terra);background:var(--terra-tint)}
+  .ind .emoji{font-size:28px;display:block;margin-bottom:8px}
+  .ind .name{font-weight:600;font-size:14px}
+  .panel{display:none;padding:8px 0 20px;animation:fade .35s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .build-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 26px;margin-top:8px}
+  .build-card .tag{display:inline-block;background:var(--terra);color:#fff;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:4px 10px;border-radius:20px;margin-bottom:14px}
+  .build-card h3{font-size:26px;margin-bottom:8px}
+  .build-card .sub{color:var(--muted);font-size:15px;margin-bottom:10px}
+  .atmos{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--terra);margin-bottom:22px}
+  .flip{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch;margin-bottom:22px}
+  @media(max-width:640px){.flip{grid-template-columns:1fr;gap:10px}.flip .arrow{transform:rotate(90deg);margin:2px auto}}
+  .state{border-radius:14px;padding:18px 16px}
+  .state.pain{background:var(--red-tint);border:1px solid #eecabf}
+  .state.fixed{background:var(--green-tint);border:1px solid #cfe0c8}
+  .state .lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .state.pain .lbl{color:var(--red)}
+  .state.fixed .lbl{color:var(--green)}
+  .state .headline{font-family:'Fraunces',serif;font-size:17px;margin-bottom:6px}
+  .state .desc{font-size:13.5px;color:var(--muted)}
+  .arrow{display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--terra)}
+  .money{background:var(--terra-tint);border-radius:12px;padding:16px 18px;text-align:center;margin-bottom:8px}
+  .money .big{font-family:'Fraunces',serif;font-size:26px;color:var(--terra);font-weight:600}
+  .money .cap{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .illus{font-size:12px;color:var(--muted);text-align:center;font-style:italic;margin-top:14px}
+  .cta{background:var(--ink);color:var(--paper);border-radius:18px;padding:36px 26px;text-align:center;margin:38px 0 20px}
+  .cta .founding{display:inline-block;background:var(--terra);color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;padding:5px 12px;border-radius:20px;margin-bottom:16px}
+  .cta h2{font-size:26px;margin-bottom:10px;color:var(--paper)}
+  .cta p{color:#d8ccc2;font-size:15px;max-width:460px;margin:0 auto 22px}
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--wa);color:#fff;text-decoration:none;font-weight:600;font-size:16px;padding:15px 30px;border-radius:30px;transition:.18s}
+  .btn:hover{background:#1eb457;transform:translateY(-1px)}
+  .btn svg{width:20px;height:20px;fill:#fff}
+  .alt{margin-top:16px;font-size:13.5px;color:#c3b7ac}
+  .alt a{color:#e8c9ba;text-decoration:underline}
+  footer{text-align:center;padding:26px 0 44px;color:var(--muted);font-size:13px}
+  footer b{color:var(--ink);font-family:'Fraunces',serif;font-weight:500}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">This is a live demo showcase by <b>Studio Bea Sophia</b> — figures are illustrative industry averages, not real client data.</div>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Studio Bea Sophia</div>
+    <h1>What could I build to make you money?</h1>
+    <p>Pick your kind of business. I'll show you the exact thing I'd build — and what it could be worth.</p>
+  </header>
+
+  <section class="picker">
+    <h2>What kind of business are you?</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="panels"></section>
+
+  <section class="cta">
+    <span class="founding">Founding client offer — 3 spots</span>
+    <h2>Want one of these for your business?</h2>
+    <p>I'm taking on 3 founding clients at a reduced rate — a full mini-build from £450, in exchange for a testimonial once it's live. Your brand, your work, ready to use. Free mockup first, no obligation.</p>
+    <a class="btn" id="waBtn" href="#">
+      <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m0 18.15c-1.52 0-3.01-.41-4.31-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.16 8.16 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.24 8.24m4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14 0-.31-.01-.48-.01s-.43.06-.66.31c-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
+      Message me on WhatsApp
+    </a>
+    <div class="alt">Prefer email? <a href="mailto:studiobeasophia@gmail.com?subject=I'd%20like%20a%20founding%20client%20mockup">studiobeasophia@gmail.com</a></div>
+  </section>
+
+  <footer><b>Studio Bea Sophia</b> — websites that get small businesses chosen.</footer>
+</div>
+
+<script>
+const WA_NUMBER = "447847321961";
+
+const builds = [
+  {id:'florist', emoji:'🌸', name:'Florist / Flower farm', tag:'The Seasonal Drop',
+   title:'A "what\'s ready this week" pre-order page',
+   sub:'Sell your fresh-cut stock before it wilts — instead of watching it die in the bucket.',
+   atmos:'Feels like opening the flower shed at 7am, buckets still cool.',
+   pain:{h:'Fresh stock, no way to sell it fast', d:'This week\'s cut flowers wilt in days. Selling via DM is slow, and sales run through Etsy or Square — taking a cut of every order.'},
+   fixed:{h:'A 2-minute weekly drop page', d:'Post what\'s ready, take deposits up front, sold-out items grey out automatically. Share the link on Instagram.'},
+   money:'~£65/mo', cap:'in marketplace fees saved on ~£1,000/mo of sales (Etsy ≈6.5% + listing + payment fees)'},
+
+  {id:'upholstery', emoji:'🪑', name:'Upholsterer / Saddler', tag:'The Job Tracker',
+   title:'A private "where\'s my chair?" status page',
+   sub:'Stop the constant "is it done yet?" texts on every bespoke job.',
+   atmos:'Feels like a quiet workshop ledger — everything accounted for.',
+   pain:{h:'Interrupted all day by status chasers', d:'Bespoke jobs take weeks. Clients text and email to check progress, breaking your focus in the workshop over and over.'},
+   fixed:{h:'A status page per commission', d:'Fabric ordered → In the workshop → Ready to collect. Clients check themselves. You get uninterrupted hours back.'},
+   money:'~4 hrs/wk', cap:'of interruptions removed — roughly £80–£160/mo of billable workshop time back at typical rates'},
+
+  {id:'studio', emoji:'🏺', name:'Pottery / Class studio', tag:'The Auto-Waitlist',
+   title:'A waitlist that fills your cancelled seats',
+   sub:'Every empty seat from a last-minute drop-out is money gone. This refills it automatically.',
+   atmos:'Feels like a full room with the wheel already spinning.',
+   pain:{h:'Dropped seats go unfilled', d:'A class sells out, someone cancels, and the spot stays empty because filling it means manually messaging people.'},
+   fixed:{h:'Auto-offer to the next in line', d:'When a seat frees up, your waitlist gets pinged and the first to grab it books in — no admin from you.'},
+   money:'~£240/mo', cap:'recovered — ~2 unfilled £30 seats/week that now sell (illustrative)'},
+
+  {id:'maker', emoji:'🧶', name:'Maker on Etsy / Square', tag:'Sell Direct',
+   title:'A "keep the Etsy cut" shopfront',
+   sub:'Sell straight from your own site and keep the fees the marketplace takes.',
+   atmos:'Feels like your own shop window, not a stall in someone else\'s market.',
+   pain:{h:'Every sale loses a cut', d:'Etsy takes a listing fee, a ~6.5% transaction fee, and payment fees on top — on every single order you make.'},
+   fixed:{h:'Your own branded shop', d:'Same products, direct checkout, none of the marketplace fees. You keep the margin and own the customer.'},
+   money:'~£520/yr', cap:'kept on ~£8,000/yr of sales that would otherwise pay Etsy fees (illustrative)'},
+
+  {id:'framer', emoji:'🖼️', name:'Picture framer', tag:'Quote in 2 Taps',
+   title:'A photo-upload quote request flow',
+   sub:'Turn framing enquiries into bookings while you\'re still in the workshop.',
+   atmos:'Feels like enquiries arriving already half-sorted on the bench.',
+   pain:{h:'Endless email back-and-forth', d:'Every enquiry starts from scratch — you email to ask what, what size, what finish, before you can even quote.'},
+   fixed:{h:'Half-qualified enquiries', d:'Customer uploads a photo, picks size and finish, and you get a ready-to-quote request — no phone tag.'},
+   money:'~£150/mo', cap:'in enquiries recovered that would\'ve drifted to a competitor with an online form (illustrative)'},
+
+  {id:'photographer', emoji:'📷', name:'Photographer', tag:'Client Gallery',
+   title:'A private gallery that sells prints too',
+   sub:'Deliver shots beautifully and sell prints — no more WeTransfer links that expire.',
+   atmos:'Feels like handing over a printed album, not a dying download link.',
+   pain:{h:'Delivery is clunky, prints don\'t sell', d:'You send a WeTransfer link that expires, and clients never come back to buy prints because there\'s no easy way to.'},
+   fixed:{h:'A branded gallery with a shop', d:'Clients view, download, and order prints in one place. Passive print sales on every shoot you deliver.'},
+   money:'~£40/shoot', cap:'in add-on print sales per delivered gallery (illustrative average)'},
+];
+
+const grid = document.getElementById('grid');
+const panels = document.getElementById('panels');
+
+builds.forEach(b=>{
+  const d=document.createElement('div');
+  d.className='ind'; d.dataset.id=b.id;
+  d.innerHTML=`<span class="emoji">${b.emoji}</span><span class="name">${b.name}</span>`;
+  grid.appendChild(d);
+
+  const p=document.createElement('div');
+  p.className='panel'; p.id='panel-'+b.id;
+  p.innerHTML=`
+    <div class="build-card">
+      <span class="tag">${b.tag}</span>
+      <h3>${b.title}</h3>
+      <div class="sub">${b.sub}</div>
+      <div class="atmos">${b.atmos}</div>
+      <div class="flip">
+        <div class="state pain"><div class="lbl">Right now</div><div class="headline">${b.pain.h}</div><div class="desc">${b.pain.d}</div></div>
+        <div class="arrow">→</div>
+        <div class="state fixed"><div class="lbl">With this build</div><div class="headline">${b.fixed.h}</div><div class="desc">${b.fixed.d}</div></div>
+      </div>
+      <div class="money"><div class="big">${b.money}</div><div class="cap">${b.cap}</div></div>
+      <div class="illus">Figures are illustrative industry averages to show the shape of the opportunity — your real numbers would be your own.</div>
+    </div>`;
+  panels.appendChild(p);
+});
+
+let currentInd = "";
+
+function setWaLink(){
+  const base = "https://wa.me/" + WA_NUMBER;
+  const msg = currentInd
+    ? `Hi Bea, I saw your showcase — I run a ${currentInd} business and I'd love a founding-client mockup.`
+    : "Hi Bea, I saw your showcase and I'd love a founding-client mockup.";
+  document.getElementById('waBtn').href = base + "?text=" + encodeURIComponent(msg);
+}
+setWaLink();
+
+document.querySelectorAll('.ind').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const id=el.dataset.id;
+    const b=builds.find(x=>x.id===id);
+    currentInd = b ? b.name.toLowerCase() : "";
+    document.querySelectorAll('.ind').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+    el.classList.add('active');
+    const panel=document.getElementById('panel-'+id);
+    panel.classList.add('show');
+    setWaLink();
+    panel.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+</script>
+</body>
+</html>
