@@ -25,12 +25,35 @@ BANNED = ["hope this finds you well","came across your profile","really impresse
           "urgent","act now","limited time"," ai ","a.i."]
 
 # Per-kind Observation + Problem + Solution + Ask. First name inserted where possible.
-def first_word(name):
-    w = re.sub(r"[^A-Za-z0-9& ].*$","",name).strip().split(" ")[0]
-    # soften SHOUTY brand names (COCOLAS -> Cocolas) so drafts don't read as ALL CAPS
-    if w.isupper() and len(w) > 2:
-        w = w.capitalize()
-    return w
+# words that make a bad standalone greeting if used as the "first word"
+_ARTICLES = {"the","a","an"}
+_SUFFIXES = {"salon","salons","barber","barbers","barbershop","hair","beauty","nails",
+             "nail","spa","studio","studios","clinic","clinics","lounge","co","ltd",
+             "london","shop","cuts","cut","and","&"}
+
+def display_name(name):
+    """A natural greeting name: drop a leading article, and if the first token is a
+    generic word (or the name is short/clean), keep the whole thing rather than a
+    chopped fragment. Softens SHOUTY caps. 'The Melange'->'The Melange',
+    'Upper Cut Barbers'->'Upper Cut', 'COCOLAS Clinic'->'Cocolas'."""
+    clean = re.sub(r"\s*[,|/(].*$","",name).strip()  # drop trailing ', Ltd' etc, keep apostrophes
+    tokens = [t for t in clean.split(" ") if t]
+    if not tokens:
+        return "there"
+    # soften all-caps tokens (COCOLAS -> Cocolas)
+    tokens = [t.capitalize() if (t.isupper() and len(t) > 2) else t for t in tokens]
+    # if it starts with an article, keep the article + next word ("The Melange")
+    if tokens[0].lower() in _ARTICLES and len(tokens) >= 2:
+        return " ".join(tokens[:2])
+    # strip trailing generic suffix words ("Upper Cut Barbers" -> "Upper Cut")
+    core = tokens[:]
+    if len(core) > 1 and core[-1].lower() in _SUFFIXES:
+        core.pop()  # strip only ONE trailing suffix ("Upper Cut Barbers" -> "Upper Cut")
+    # keep at most 2 words for a warm, short greeting
+    return " ".join(core[:2])
+
+def first_word(name):  # kept for back-compat
+    return display_name(name)
 
 def subject_for(kind, name):
     return {
@@ -41,10 +64,10 @@ def subject_for(kind, name):
         "no-booking": "your booking page",
     }.get(kind, "quick idea")
 
-def body_for(lead):
+def body_for(lead, local=False):
     kind = _kind(lead)
     name = lead.get("business_name","your shop")
-    short = first_word(name)
+    short = display_name(name)
     O = {
       "dead": f"It looks like the website linked from {short}'s Google listing isn't loading right now.",
       "no-site": f"It seems like {short} shows up on Google Maps but there's no website attached yet.",
@@ -59,7 +82,13 @@ def body_for(lead):
       "thin": "So an interested customer lands, finds nothing to act on, and the enquiry leaks to voicemail.",
       "no-booking": "So enquiries come in by phone at the worst moments, and after-hours interest just evaporates.",
     }.get(kind, "So you're likely leaving bookings on the table.")
-    S = "I build small, fast booking pages for local places like yours that turn a Google click into a booked slot."
+    if local:
+        S = ("I'm a London-based designer — I build small, fast booking pages for "
+             "studios like yours that turn a Google click into a booked slot, and "
+             "we can meet in person if that's easier.")
+    else:
+        S = ("I build small, fast booking pages for studios like yours that turn a "
+             "Google click into a booked slot.")
     A = "Want me to send a 2-minute mockup of what yours could look like?"
     PS = "P.S. — if the site's already handled, no worries; happy to point you to something useful instead."
     return f"Hi {short},\n\n{O} {P}\n\n{S}\n\n{A}\n\n— {SIGN}\n\n{PS}"
@@ -110,6 +139,8 @@ def main():
     ap.add_argument("--out", default="")
     ap.add_argument("--only-with-email", action="store_true")
     ap.add_argument("--kind", default="")
+    ap.add_argument("--local", action="store_true",
+                    help="add the honest 'London-based designer' trust line (works city-wide)")
     a = ap.parse_args()
     leads = json.load(open(a.leads))
     kinds = set(a.kind.split(",")) if a.kind else None
@@ -118,7 +149,7 @@ def main():
         if a.only_with_email and not L.get("contact_email"): continue
         if kinds and _kind(L) not in kinds: continue
         subj = subject_for(_kind(L), L.get("business_name",""))
-        body = body_for(L)
+        body = body_for(L, local=a.local)
         L2 = dict(L)
         L2["drafted_email_subject"] = subj
         L2["drafted_email_body"] = body
