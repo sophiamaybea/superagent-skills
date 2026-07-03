@@ -47,3 +47,14 @@ setting `"pageno": false`.
 ## Brand system (locked)
 Fonts Fraunces (serif headlines) + IBM Plex Mono (body). Colours: periwinkle
 #5b6ef5 eyebrows, orange #f07d1a accent, ink #111. Edit `base.css` to tweak.
+
+## Signature end-card (auto)
+Every deck automatically gets a final **signature** slide: the red cherub logo
+centered on the brand ground with the @studiobeasophia handle + orange rule.
+It stays clean/red even when `photocopy:true` (photocopy-exempt by default).
+
+- Opt out for a whole deck: add `"signature": false` at the top level.
+- Add it manually / control placement: include `{ "layout": "signature", "handle": "@studiobeasophia" }`.
+- Force it to halftone too: `{ "layout": "signature", "photocopy": true }`.
+
+The cherub asset lives at `assets/cherub.png` (transparent PNG).
