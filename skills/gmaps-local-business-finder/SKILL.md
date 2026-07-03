@@ -68,7 +68,7 @@ Help the user be specific to maximize results per credit:
 ### Step 4: Execute Search
 
 ```bash
-curl -X POST "https://gmapsscraper.io/api/v1/jobs" \
+curl -X POST "https://gmapsscraper.io/api/v1/scrape" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $GMAPS_SCRAPER_API_KEY" \
   -d '{
@@ -83,6 +83,9 @@ curl -X POST "https://gmapsscraper.io/api/v1/jobs" \
 ### Step 5: Download & Present
 
 ```bash
+# CREATE: POST /api/v1/scrape  -> returns {"id","credits_remaining"}
+# POLL:   GET  /api/v1/jobs/{id}  -> until {"status":"complete"}
+# GET:    GET  /api/v1/credits   -> {"credits":N}  (N/2 = searches left)
 curl -s "https://gmapsscraper.io/api/v1/jobs/{{job_id}}/download" \
   -H "Authorization: Bearer $GMAPS_SCRAPER_API_KEY" \
   --output businesses.csv
