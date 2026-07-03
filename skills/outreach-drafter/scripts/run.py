@@ -62,6 +62,8 @@ def subject_for(kind, name):
         "third-party":"owning your bookings",
         "thin":       "your booking page",
         "no-booking": "your booking page",
+        "parked":     "your website",
+        "insecure":   "your website",
     }.get(kind, "quick idea")
 
 def body_for(lead, local=False):
@@ -74,6 +76,8 @@ def body_for(lead, local=False):
       "third-party": f"It looks like {short}'s bookings run entirely through a third-party page rather than your own site.",
       "thin": f"It looks like {short}'s site is up, but it's close to a placeholder with no way to book.",
       "no-booking": f"It looks like {short}'s site is lovely, but there's no way to book online from it.",
+      "parked": f"It looks like the site for {short} is still just a 'coming soon' placeholder.",
+      "insecure": f"It looks like {short}'s site still loads over an insecure connection.",
     }.get(kind, f"It looks like {short}'s site could be doing more for you.")
     P = {
       "dead": "So anyone who clicks through hits a dead page — and most won't call, they'll just pick the next salon.",
@@ -81,17 +85,59 @@ def body_for(lead, local=False):
       "third-party": "So you pay commission on every booking and don't own the customer relationship or show up well on Google.",
       "thin": "So an interested customer lands, finds nothing to act on, and the enquiry leaks to voicemail.",
       "no-booking": "So enquiries come in by phone at the worst moments, and after-hours interest just evaporates.",
+      "parked": "So anyone who checks you out online assumes you've closed or never opened — and picks someone who looks open for business.",
+      "insecure": "So browsers flag your site 'Not secure', visitors hesitate, and Google quietly ranks you below competitors.",
     }.get(kind, "So you're likely leaving bookings on the table.")
+    # sector pain overrides the generic Problem line — names the REAL commercial lever
+    sec = sector_of(lead)
+    if sec and sec in SECTOR_PROBLEM and kind != "has-booking":
+        P = SECTOR_PROBLEM[sec]
+    noun = "small businesses" if sec else "studios"
     if local:
-        S = ("I'm a London-based designer — I build small, fast booking pages for "
-             "studios like yours that turn a Google click into a booked slot, and "
-             "we can meet in person if that's easier.")
+        S = (f"I'm a London-based designer — I build small, fast websites for {noun} "
+             f"like yours that turn a Google click into an enquiry, and we can meet if that helps.")
     else:
-        S = ("I build small, fast booking pages for studios like yours that turn a "
-             "Google click into a booked slot.")
+        S = (f"I build small, fast websites for {noun} like yours that turn a "
+             f"Google click into an enquiry.")
     A = "Want me to send a 2-minute mockup of what yours could look like?"
     PS = "P.S. — if the site's already handled, no worries; happy to point you to something useful instead."
     return f"Hi {short},\n\n{O} {P}\n\n{S}\n\n{A}\n\n— {SIGN}\n\n{PS}"
+
+# --- sector detection: infer the business vertical from name + type, so the email
+# can name the REAL commercial pain (not just "no booking") ---
+SECTOR_RULES = [
+    ("pharmacy",   ("pharmacy","chemist","dispens")),
+    ("travel",     ("travel agent","travel agency","holidays","tour operator")),
+    ("optician",   ("optician","opticians","eyecare","eye care")),
+    ("dentist",    ("dental","dentist","orthodont")),
+    ("restaurant", ("restaurant","kitchen","bistro","trattoria","dining")),
+    ("takeaway",   ("takeaway","take away","fish & chips","fish and chips","kebab","pizza")),
+    ("salon",      ("salon","hair","barber","nails","beauty","spa","aesthetic")),
+    ("garage",     ("garage","mot","car repair","autocentre","auto centre","tyres","tyre")),
+    ("florist",    ("florist","flowers","flower shop")),
+    ("gym",        ("gym","fitness","pilates","yoga","crossfit")),
+]
+
+def sector_of(lead):
+    hay = (str(lead.get("business_name","")) + " " + str(lead.get("business_type","")) + " " + str(lead.get("category",""))).lower()
+    for name, kws in SECTOR_RULES:
+        if any(k in hay for k in kws):
+            return name
+    return None
+
+# Sector-specific Problem line — WHY their weak/absent site is costing them money,
+# framed on the biggest commercial lever for that vertical.
+SECTOR_PROBLEM = {
+  "pharmacy":  "So you lean on squeezed NHS margins while the private side that pays — travel jabs, weight-loss, private scripts — stays invisible online.",
+  "travel":    "So people research trips on their phone, find nothing to enquire, and hand the sale to an online agent.",
+  "optician":  "So eye tests and private frames — where the margin is — can't be booked online, and people default to the chain.",
+  "dentist":   "So private treatments and new-patient enquiries — the real revenue — leak to voicemail and to competitors who book online.",
+  "restaurant":"So tables and enquiries come in by phone at the worst moments, and after-hours interest just disappears.",
+  "takeaway":  "So orders go through apps that take a big cut, instead of a direct ordering page you actually own.",
+  "garage":    "So MOT and service bookings hang on the phone being answered, and after-hours enquiries evaporate.",
+  "florist":   "So high-value wedding and event orders can't be enquired online, and go to a florist who takes them.",
+  "gym":       "So trials and memberships can't be started online, and interested people cool off before they ever call.",
+}
 
 def _kind(lead):
     p = (lead.get("pain_signals") or "").lower()

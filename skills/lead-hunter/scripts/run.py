@@ -131,20 +131,31 @@ def diagnose(url):
     html = fetch(url)
     if not html: return ("website is dead/won't load", "dead")
     h = html.lower()
+    # parked / coming-soon / for-sale domains — mid-transition, very receptive
+    parked_markers = ("coming soon","under construction","site coming soon","launching soon",
+                      "domain is for sale","buy this domain","parked free","this domain is parked",
+                      "godaddy.com/domainsearch","future home of","website coming soon")
+    if any(m in h for m in parked_markers) or len(html) < 1200:
+        return ("site is a 'coming soon'/parked placeholder — no real site yet", "parked")
     plat = ""
     if "wix.com" in h or "wixstatic" in h: plat = "Wix"
     elif "squarespace" in h: plat = "Squarespace"
     elif "wordpress" in h or "wp-content" in h: plat = "WordPress"
     elif "godaddy" in h or "website builder" in h: plat = "GoDaddy-builder"
+    insecure = url.lower().startswith("http://")  # no HTTPS — browsers warn, Google penalises
     booking = any(b in h for b in ("book now","book online","booking","appointment","reserve","fresha","booksy","treatwell"))
     thin = len(html) < 6000
-    if thin: return (f"{plat or 'thin'} near-empty page, no booking", "thin")
+    if thin:
+        tag = f"{plat or 'thin'} near-empty page, no booking"
+        return (tag + (" (no HTTPS)" if insecure else ""), "thin")
+    if insecure:
+        return (f"{plat or 'site'} loads over insecure http, no HTTPS", "insecure")
     if not booking: return (f"{plat or 'site'}, no online booking", "no-booking")
     return (f"{plat or 'custom'}, has booking", "has-booking")
 
 
 def score(kind, rating):
-    base = {"dead":88,"no-site":78,"third-party":74,"thin":72,"no-booking":68,"has-booking":52}.get(kind,50)
+    base = {"dead":88,"parked":86,"no-site":78,"third-party":74,"thin":72,"insecure":70,"no-booking":68,"has-booking":52}.get(kind,50)
     if base >= 68:
         if rating >= 4.8: base += 6
         elif rating >= 4.5: base += 3
@@ -157,6 +168,8 @@ ANGLE = {
  "third-party":"Renting your presence on a third-party page — no owned home, paying commission.",
  "thin":"Site loads but it's near-empty with no way to book — enquiries leak to voicemail.",
  "no-booking":"Site loads but there's no way to book — enquiries leak to voicemail.",
+ "parked":"The site is just a 'coming soon' placeholder — visitors assume you've closed down.",
+ "insecure":"Site loads over insecure http — browsers flag it 'Not secure' and Google ranks it lower.",
  "has-booking":"Already has booking — only worth a design refresh.",
 }
 
