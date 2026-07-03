@@ -141,8 +141,10 @@ SECTOR_PROBLEM = {
 
 def _kind(lead):
     p = (lead.get("pain_signals") or "").lower()
+    if "coming soon" in p or "parked" in p or "placeholder" in p: return "parked"
     if "dead" in p or "won't load" in p: return "dead"
-    if "no website" in p or "no owned site" not in p and "invisible" in p: return "no-site"
+    if "no website" in p or "invisible" in p: return "no-site"
+    if "insecure" in p or "no https" in p: return "insecure"
     if "only" in p or "third" in p: return "third-party"
     if "near-empty" in p or "thin" in p: return "thin"
     if "no booking" in p or "no online booking" in p: return "no-booking"
