@@ -1,0 +1,8 @@
+{
+  "skill": "omega-builder",
+  "test_cases": [
+    {"input": "OMEGA BUILDER build the real system for this", "should_trigger": true},
+    {"input": "principal engineer this and research GitHub before you choose a stack", "should_trigger": true},
+    {"input": "write a Suno prompt for a sad electro-swing chorus", "should_trigger": false}
+  ]
+}
