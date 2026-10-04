@@ -1,0 +1,11 @@
+{
+  "name": "omega-builder",
+  "description": "Autonomous principal-engineer skill. Researches the landscape, chooses an architecture, builds a vertical slice, attacks it, and ships a working system.",
+  "category": "development",
+  "canonical_category": "development",
+  "source": "skill-creator",
+  "has_scripts": true,
+  "has_extra_files": true,
+  "skill_level_label": "workflow",
+  "install_path": ".agents/skills/omega-builder"
+}
